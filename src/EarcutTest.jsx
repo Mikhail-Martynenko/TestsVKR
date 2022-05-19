@@ -87,9 +87,20 @@ const EarcutTest = () => {
     //  ]
   //  polygon
     let polygon = [
-        [[0, 0],[500, 0], [500, 500], [400, 500],  [400, 250], [100, 250], [100, 500], [0, 500],], //outer polygon
-         // [[250,50],[250,100],[100,100],[100,50]] //hole
+        [[0, 0],[500, 0], [500, 500], [400, 500],  [400, 250], [100, 250], [100, 500], [0, 500]], //outer polygon
+            //   [[200,100],[200,150],[300,150],[300,100]],//hole
     ]
+
+    let polygon2 = [
+        [[0, 0],[0, 600], [300, 600], [300, 450],  [150, 450], [150, 300], [75, 150], [75, 0]], //outer polygon
+        //   [[200,100],[200,150],[300,150],[300,100]],//hole
+    ]
+    // let Ik10 = [
+    //     [[0, 0],[0, 50], [500, 50], [500, 0]], //outer polygon
+    // ]
+    // let Ik5 = [
+    //     [[0, 0],[0, 50], [250, 50], [250, 0]],  //outer polygon
+    // ]
    // Rectangle test increase points
    //  function addPointsRectangle() {
    //      let arr = [0, 0,600, 0, 600, 300, 0, 300]
@@ -120,7 +131,7 @@ const EarcutTest = () => {
 
     const rectangleArrayPoints = [
         [[0, 0], [600, 0], [600, 300], [0, 300]], //outer polygon
-        //  [[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]] //hole
+        // [[200,100],[200,200],[400,200],[400,100],] //hole
     ]
 
    //  console.log(rectangleArrayPoints)
@@ -164,28 +175,15 @@ const EarcutTest = () => {
             context.moveTo(v[result[i] * 2], v[result[i] * 2 + 1]);
             context.lineTo(v[result[i + 1] * 2], v[result[i + 1] * 2 + 1]);
             context.lineTo(v[result[i + 2] * 2], v[result[i + 2] * 2 + 1]);
-            context.fillStyle = `rgba(${Math.random()*255},${Math.random()*255},${Math.random()*255}, 0.5)`;
+           context.fillStyle = `rgba(${Math.random()*255},${Math.random()*255},${Math.random()*255}, 0.5)`;
+           // context.fillStyle = `white`;
             context.fill();
             context.closePath();
             context.stroke();
         }
         console.log(arrCoordinatesVerticesTriangle)
         calcLengthSidesTriangles(arrCoordinatesVerticesTriangle)
-        // Правильность триангуляции
-        // let deviation = earcut.deviation(toProcess.vertices, toProcess.holes, toProcess.dimensions, result);
-        // console.log(deviation)
-        // if (deviation < 0.1) {
-        //     setStateTriangulation(`Триангуляция отличная`)
-        // }
-        // else if (deviation > 0.1 && deviation <= 0.2) {
-        //     setStateTriangulation(`Триангуляция хорошая`)
-        // }
-        // else if (deviation > 0.2 && deviation <= 0.4) {
-        //     setStateTriangulation(`Триангуляция нормальная`)
-        // }
-        // else {
-        //     setStateTriangulation(`Триангуляция плохая`)
-        // }
+
     }
     // function triangulationButton(e) {
     //

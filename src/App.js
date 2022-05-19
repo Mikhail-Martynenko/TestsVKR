@@ -1,5 +1,6 @@
 import React, {useEffect, useRef, useState} from "react";
 import {Delaunay} from "d3-delaunay";
+
 import './App.css'
 import EarcutTest from "./EarcutTest";
 
@@ -20,41 +21,47 @@ function App() {
     }
   }
 
-
-
-
 // Функция для добавления точек в круг
-  function triangulationCircle(stepСircle) {
-    let radius = 200;
+  function addPointsForCircle(stepСircle) {
     let x = null;
     let y = null;
+    // Точка в центре окружности
     pointsForCircle.push([300, 300]);
-    // for (let phi = 0; phi <= 360; phi += stepСircle) {
-    //     for (let radius = 200; radius >= 100; radius /= 2) {
-    //         x = Math.abs(Math.floor(radius * Math.cos(phi)) + 300);
-    //         y = Math.abs(Math.floor(radius * Math.sin(phi)) + 300);
-    //         pointsForCircle.push([x, y]);
-    //     }
+    //точки на окружности
+    // 1й способ
+    // for (let phi = 0; phi <= 360; phi += 30) {
+    //   let radius = 200;
+    //   x = Math.abs(Math.floor(radius * Math.cos(phi / 180 * Math.PI)) + 300);
+    //   y = Math.abs(Math.floor(radius * Math.sin(phi / 180 * Math.PI)) + 300);
+    //   pointsForCircle.push([x, y]);
     // }
-    for (let phi = 0; phi <= 360; phi += stepСircle) {
-      x = Math.abs(Math.floor(radius * Math.cos(phi)) + 300);
-      y = Math.abs(Math.floor(radius * Math.sin(phi)) + 300);
-      pointsForCircle.push([x, y]);
-      console.log(([x, y]))
+    // for (let phi = 0; phi <= 360; phi += 60) {
+    //   let radius = 100;
+    //   x = Math.abs(Math.floor(radius * Math.cos(phi / 180 * Math.PI)) + 300);
+    //   y = Math.abs(Math.floor(radius * Math.sin(phi / 180 * Math.PI)) + 300);
+    //   pointsForCircle.push([x, y]);
+    // }
+
+
+    addPoints(15,200);
+    addPoints(20,150);
+    addPoints(30,100);
+    addPoints(60,50);
+    function addPoints(step,radius){
+      for (let phi = 0; phi <= 360; phi += step) {
+        x = Math.abs(Math.floor(radius * Math.cos(phi / 180 * Math.PI)) + 300);
+        y = Math.abs(Math.floor(radius * Math.sin(phi / 180 * Math.PI)) + 300);
+        pointsForCircle.push([x, y]);
+      }
     }
-    // for (let x = 0; x <= 200; x += 100) {
-    //     for (let y = 0; y <= 200; y += 100) {
-    //         pointsForCircle.push([x+200 , y+200 ]);
-    //     }
-    // }
-    drawCircle()
+    drawCircle(300,300,200);
   }
 
 // Нарисовать круг
-  function drawCircle() {
+  function drawCircle(x,y,r) {
     context.beginPath();
     context.fillStyle = "#FFF";
-    context.arc(300, 300, 200, 0, Math.PI * 2);
+    context.arc(x, y, r, 0, Math.PI * 2);
     context.fill();
     context.stroke();
     context.closePath();
@@ -82,6 +89,10 @@ function App() {
     console.log(delaunay)
     /**/
     let arrCoordinatesVerticesTriangle = []; // массив координат вершин треугольников
+
+    arr.forEach((p)=>{
+      drawCircle(p[0],p[1],4)
+    })
 
     for (let i = 0; i < triangles.length / 3; i++) {
       const {points, triangles} = delaunay;
@@ -137,7 +148,7 @@ function App() {
   function triangulationCircleButton(e) {
     context.clearRect(0, 0, canvas.width, canvas.height);
     e.preventDefault();
-    triangulationCircle(Number(title2))
+    addPointsForCircle(Number(title2))
     triangulation(pointsForCircle)
 
     pointsForCircle = [];
@@ -151,7 +162,7 @@ function App() {
     triangulation(arrPointsPolygon)
   }
 
-// Подсчёт длин сторон треугольника по трём сторонам
+// Подсчёт длин сторон треугольника по трём вершинам
   function calcLengthSidesTriangles(arrCoordinatesVerticesTriangle) {
     let a, b, c;
     // Создаём новый массив с результатами вычислений длин сторон по координатам его вершин
